@@ -1,0 +1,1 @@
+This flask application constitutes the backend of our product.
