@@ -93,6 +93,23 @@ def send_confirmation_email(reservation_id, email):
     except:
         print("Email didnt work, TODO") #TODO
 
+@app.route('/reserve_parking_lot_availability', methods=['GET'])
+def reserve_parking_lot_availability():
+    data = request.json 
+    start_str = data['start'].rstrip('Z')  # Remove 'Z' if present #  'Z' (Zulu time, which is another way to denote UTC) 
+    end_str = data['end'].rstrip('Z')  # Remove 'Z' if present
+    start = datetime.fromisoformat(start_str)
+    end = datetime.fromisoformat(end_str)
+    # Ensure the start and end times are in 15-minute intervals
+    if (start.minute % 15 != 0) or (end.minute % 15 != 0):
+        return jsonify({'available': False, 'message': 'Reservations must be in 15-minute intervals'}), 400
+    # Check if the datetime range is available
+    conflict = ParkingLotReservation.query.filter(
+        (ParkingLotReservation.start_datetime < end) & (ParkingLotReservation.end_datetime > start)
+    ).first()
+    if conflict:
+        return jsonify({'available': False}), 400
+    return jsonify({'available': True})
 
 @app.route('/reserve_parking_lot', methods=['POST'])
 def reserveParkingLot():
@@ -114,6 +131,24 @@ def reserveParkingLot():
     db.session.add(new_reservation)
     db.session.commit()
     return jsonify({'message': 'Datetime is reserved'})
+
+@app.route('/reserve_availability', methods=['GET'])
+def reserve_availability():
+    data = request.json 
+    start_str = data['start'].rstrip('Z')  # Remove 'Z' if present #  'Z' (Zulu time, which is another way to denote UTC) 
+    end_str = data['end'].rstrip('Z')  # Remove 'Z' if present
+    start = datetime.fromisoformat(start_str)
+    end = datetime.fromisoformat(end_str)
+    # Ensure the start and end times are in 15-minute intervals
+    if (start.minute % 15 != 0) or (end.minute % 15 != 0):
+        return jsonify({'available': False, 'message': 'Reservations must be in 15-minute intervals'}), 400
+    # Check if the datetime range is available
+    conflict = Reservation.query.filter(
+        (Reservation.start_datetime < end) & (Reservation.end_datetime > start)
+    ).first()
+    if conflict:
+        return jsonify({'available': False}), 400
+    return jsonify({'available': True})
 
     
 @app.route('/reserve', methods=['POST'])
