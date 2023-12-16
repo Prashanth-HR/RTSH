@@ -28,8 +28,9 @@ class Reservation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     start_datetime = db.Column(db.DateTime, nullable=False)
     end_datetime = db.Column(db.DateTime, nullable=False)
-    description = db.Column(db.String, nullable=True)  # New field
-    email = db.Column(db.String, nullable=False)  # New field
+    description = db.Column(db.String, nullable=True) 
+    name = db.Column(db.String, nullable=True)
+    email = db.Column(db.String, nullable=False) 
     confirmed = db.Column(db.Boolean, default=False, nullable=False)
 
 
@@ -106,7 +107,7 @@ def reserve():
         return jsonify({'message': 'Datetime is not available for reservation'}), 400
 
     # Create a new reservation
-    new_reservation = Reservation(start_datetime=start, end_datetime=end, email=data['email'], description=data['description'])
+    new_reservation = Reservation(start_datetime=start, end_datetime=end, email=data['email'], description=data['description'], name=data['name'])
 
     
     # Generate a token and send an email
