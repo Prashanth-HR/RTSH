@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import { BookingsCalender } from "src/booking/BookingsCalendar";
 import BookingForm from '../booking/BookingForm';
 import { Bookings } from '../booking/Bookings';
+import {MainPage} from './react components/MainPage.js';
 
 
 const Home = () => {
@@ -71,7 +72,7 @@ const Body = () => {
     return (
         <>
             <Routes>
-                <Route path='/' />
+                <Route path='/' element={<MainPage/>}/>
                 <Route path='/simulation' />
                 <Route path='/booking' element={<Bookings />} />
                 <Route path='/booking/create' element={<BookingForm type='normal' />} />
