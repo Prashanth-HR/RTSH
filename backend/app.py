@@ -96,11 +96,11 @@ def send_confirmation_email(reservation_id, email):
 @app.route('/reserve_parking_lot_availability', methods=['GET'])
 def reserve_parking_lot_availability():
     data = request.json 
-    start_str = data['start'].rstrip('Z')  # Remove 'Z' if present #  'Z' (Zulu time, which is another way to denote UTC) 
-    end_str = data['end'].rstrip('Z')  # Remove 'Z' if present
-    start = datetime.fromisoformat(start_str)
+    start_str = data['start_datetime'].rstrip('Z')  # Remove 'Z' if present #  'Z' (Zulu time, which is another way to denote UTC) 
+    end_str = data['end_datetime'].rstrip('Z')  # Remove 'Z' if present
+    start_datetime= datetime.fromisoformat(start_str)
     end = datetime.fromisoformat(end_str)
-    # Ensure the start and end times are in 15-minute intervals
+    # Ensure the start_datetimeand end times are in 15-minute intervals
     if (start.minute % 15 != 0) or (end.minute % 15 != 0):
         return jsonify({'available': False, 'message': 'Reservations must be in 15-minute intervals'}), 400
     # Check if the datetime range is available
@@ -114,9 +114,9 @@ def reserve_parking_lot_availability():
 @app.route('/reserve_parking_lot', methods=['POST'])
 def reserveParkingLot():
     data = request.json 
-    start_str = data['start'].rstrip('Z')  # Remove 'Z' if present #  'Z' (Zulu time, which is another way to denote UTC) 
-    end_str = data['end'].rstrip('Z')  # Remove 'Z' if present
-    start = datetime.fromisoformat(start_str)
+    start_str = data['start_datetime'].rstrip('Z')  # Remove 'Z' if present #  'Z' (Zulu time, which is another way to denote UTC) 
+    end_str = data['end_datetime'].rstrip('Z')  # Remove 'Z' if present
+    start= datetime.fromisoformat(start_str)
     end = datetime.fromisoformat(end_str)
     if (start.minute % 15 != 0) or (end.minute % 15 != 0):
         return jsonify({'message': 'Reservations must be in 15-minute intervals'}), 400
@@ -135,11 +135,11 @@ def reserveParkingLot():
 @app.route('/reserve_availability', methods=['GET'])
 def reserve_availability():
     data = request.json 
-    start_str = data['start'].rstrip('Z')  # Remove 'Z' if present #  'Z' (Zulu time, which is another way to denote UTC) 
-    end_str = data['end'].rstrip('Z')  # Remove 'Z' if present
-    start = datetime.fromisoformat(start_str)
+    start_str = data['start_datetime'].rstrip('Z')  # Remove 'Z' if present #  'Z' (Zulu time, which is another way to denote UTC) 
+    end_str = data['end_datetime'].rstrip('Z')  # Remove 'Z' if present
+    start= datetime.fromisoformat(start_str)
     end = datetime.fromisoformat(end_str)
-    # Ensure the start and end times are in 15-minute intervals
+    # Ensure the start_datetimeand end times are in 15-minute intervals
     if (start.minute % 15 != 0) or (end.minute % 15 != 0):
         return jsonify({'available': False, 'message': 'Reservations must be in 15-minute intervals'}), 400
     # Check if the datetime range is available
@@ -154,9 +154,9 @@ def reserve_availability():
 @app.route('/reserve', methods=['POST'])
 def reserve():
     data = request.json 
-    start_str = data['start'].rstrip('Z')  # Remove 'Z' if present #  'Z' (Zulu time, which is another way to denote UTC) 
-    end_str = data['end'].rstrip('Z')  # Remove 'Z' if present
-    start = datetime.fromisoformat(start_str)
+    start_str = data['start_datetime'].rstrip('Z')  # Remove 'Z' if present #  'Z' (Zulu time, which is another way to denote UTC) 
+    end_str = data['end_datetime'].rstrip('Z')  # Remove 'Z' if present
+    start= datetime.fromisoformat(start_str)
     end = datetime.fromisoformat(end_str)
 
 
