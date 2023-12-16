@@ -94,6 +94,35 @@ def get_normalized_trends(keyword, last_n_days=30, min_value=0.8, max_value=1.2)
     normalized_trends = normalized_trends * (max_value - min_value) + min_value
 
     return normalized_trends
+
+def get_current_day_normalized_trend(keyword, last_n_days=30, min_value=0.8, max_value=1.2):
+    """
+    Fetch Google Trends data for the last n days, normalize it, and return the value for the current day.
+
+    :param keyword: Keyword to search in Google Trends
+    :param last_n_days: Number of days to look back
+    :param min_value: Minimum value of the normalized range
+    :param max_value: Maximum value of the normalized range
+    :return: Normalized value for the current day
+    """
+    today = datetime.date.today()
+    start_date = today - datetime.timedelta(days=last_n_days)
+    timeframe = f'{start_date} {today}'
+
+    pytrends.build_payload(kw_list=[keyword], timeframe=timeframe)
+    interest_over_time_df = pytrends.interest_over_time()
+
+    # Normalize the values to the specified range
+    min_trend = interest_over_time_df[keyword].min()
+    max_trend = interest_over_time_df[keyword].max()
+    normalized_trends = (interest_over_time_df[keyword] - min_trend) / (max_trend - min_trend)
+    normalized_trends = normalized_trends * (max_value - min_value) + min_value
+
+    # Get the value for the current day
+    current_day_value = normalized_trends.get(today.strftime('%Y-%m-%d'))
+    return current_day_value
+
+
 def calculate_hourly_price(operational_cost_per_hour, google_trends_factor, profit_margin_percentage):
     """
     Calculate the hourly rental price, adjusting based on Google Trends data and desired profit margin.
@@ -125,10 +154,10 @@ keyword = 'autonomous vehicles'
 # rolling_monthly_averages_month = get_rolling_monthly_averages_for_last_n_days(keyword, 30)
 
 # Plotting side by side
-plot_trend_graphs([daily_trends_last_week, rolling_monthly_averages_week, rolling_monthly_averages_month], 
-                  ['Daily Trends - Last 7 Days', 'Rolling Monthly Averages - Last 7 Days', 'Rolling Monthly Averages - Last 30 Days'])
+# plot_trend_graphs([daily_trends_last_week, rolling_monthly_averages_week, rolling_monthly_averages_month], 
+#                   ['Daily Trends - Last 7 Days', 'Rolling Monthly Averages - Last 7 Days', 'Rolling Monthly Averages - Last 30 Days'])
 
-print(f"Average trend for '{keyword}' in the last 30 days: {average_trend_30_days}")
+# print(f"Average trend for '{keyword}' in the last 30 days: {average_trend_30_days}")
 
 
 # Example usage
@@ -140,13 +169,14 @@ print(f"Average trend for '{keyword}' in the last 30 days: {average_trend_30_day
 # average_demand = 50  # Estimated rentals per month
 
 
+current_day_normalized_trend = get_current_day_normalized_trend(keyword)
+print(f"{current_day_normalized_trend=}")
+
+
 # Example usage
 operational_cost_hourly = 200  # Example cost in eyr per hour
 profit_margin = 20             # 20% profit margin
- 
-# Assuming the rolling monthly average from Google Trends is used as a factor (e.g., 1.2 for 20% higher than average demand)
-google_trends_average = 1.2  
 
-hourly_price = calculate_hourly_price(operational_cost_hourly, google_trends_average, profit_margin)
+hourly_price = calculate_hourly_price(operational_cost_hourly, current_day_normalized_trend, profit_margin)
 print(f"Recommended Hourly Rental Price: ${hourly_price:.2f}")
 
