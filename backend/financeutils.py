@@ -95,7 +95,7 @@ def get_normalized_trends(keyword, last_n_days=30, min_value=0.8, max_value=1.2)
 
     return normalized_trends
 
-def get_current_or_previous_day_normalized_trend(keyword, last_n_days=30, min_value=0.8, max_value=1.2):
+def get_current_or_previous_day_normalized_trend(keyword, last_n_days=30, min_value=0.8, max_value=1.2, today= datetime.date.today()):
     """
     Fetch Google Trends data for the last n days, normalize it, and return the value for the current day.
     If the current day's data is not available, return the most recent available day's data.
@@ -106,7 +106,6 @@ def get_current_or_previous_day_normalized_trend(keyword, last_n_days=30, min_va
     :param max_value: Maximum value of the normalized range
     :return: Normalized value for the current or most recent day
     """
-    today = datetime.date.today()
     start_date = today - datetime.timedelta(days=last_n_days)
     timeframe = f'{start_date} {today}'
 
@@ -144,15 +143,9 @@ def calculate_hourly_price(operational_cost_per_hour, google_trends_factor, prof
     price_with_profit = base_price * (1 + profit_margin_percentage / 100)
     return price_with_profit
 
-# Example usage
-operational_cost_hourly = 200  # Example cost in dollars per hour
-profit_margin = 20             # 20% profit margin
 
 # Assuming the rolling monthly average from Google Trends is used as a factor (e.g., 1.2 for 20% higher than average demand)
-google_trends_average = 1.2  
 
-hourly_price = calculate_hourly_price(operational_cost_hourly, google_trends_average, profit_margin)
-print(f"Recommended Hourly Rental Price: ${hourly_price:.2f}")
 
 # Example usage
 keyword = 'autonomous vehicles'
@@ -177,7 +170,7 @@ keyword = 'autonomous vehicles'
 # average_demand = 50  # Estimated rentals per month
 
 
-current_day_normalized_trend = get_current_day_normalized_trend(keyword)
+current_day_normalized_trend = get_current_or_previous_day_normalized_trend(keyword)
 print(f"{current_day_normalized_trend=}")
 
 
@@ -188,3 +181,27 @@ profit_margin = 20             # 20% profit margin
 hourly_price = calculate_hourly_price(operational_cost_hourly, current_day_normalized_trend, profit_margin)
 print(f"Recommended Hourly Rental Price: ${hourly_price:.2f}")
 
+
+# Collecting normalized trends for each day of the last 30 days
+price_values = []
+dates = []
+today = datetime.date.today()
+
+for day_back in range(30):
+    specific_day = today - datetime.timedelta(days=day_back)
+    normalized_trend = get_current_or_previous_day_normalized_trend(keyword, today=specific_day)
+    price_values.append(calculate_hourly_price(operational_cost_hourly, normalized_trend, profit_margin))
+    dates.append(specific_day)
+
+# Convert to a pandas Series for easy plotting
+trend_series = pd.Series(price_values, index=dates)
+
+# Plotting
+plt.figure(figsize=(12, 6))
+trend_series.plot(marker='o')
+plt.title(f"Calculated price suggestions over the Last 30 Days")
+plt.xlabel('Date')
+plt.ylabel('Price')
+plt.grid(True)
+plt.gca().invert_xaxis()  # Invert x-axis to show the most recent date on the right
+plt.show()
