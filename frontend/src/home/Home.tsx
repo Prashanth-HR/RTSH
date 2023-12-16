@@ -66,9 +66,10 @@ const Body = () => {
     return (
         <>
             <Routes>
-                <Route path='/' element={<BookingList bookings={bookings} onRemoveBooking={removeBooking} />} />
-                <Route path='/simulation' element={<BookingForm />} />
-                <Route path='/booking' element={<BookingForm onAddBooking={addBooking} />} />
+                <Route path='/'  />
+                <Route path='/simulation'  />
+                <Route path='/booking' element={<BookingList bookings={bookings} onRemoveBooking={removeBooking} />} />
+                <Route path='/booking/create' element={<BookingForm onAddBooking={addBooking} />} />
             </Routes>
         </>
     )
