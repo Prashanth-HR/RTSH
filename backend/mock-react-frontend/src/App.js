@@ -4,6 +4,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+const imageUrl = process.env.PUBLIC_URL + '/testbed.png'; // Adjust the path if your image is in a different folder
 
 const App = () => {
     const [reservedDates, setReservedDates] = useState([]);
@@ -27,7 +28,6 @@ const App = () => {
             email: email,
             description: description,
             name: name,
-
         };
 
         fetch('http://127.0.0.1:5000/reserve', {
@@ -95,6 +95,7 @@ const App = () => {
                 />
                 <button onClick={handleReservation}>Reserve</button>
             </div>
+            <img src={imageUrl} alt="Example" />
         </div>
     );
 };
