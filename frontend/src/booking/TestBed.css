@@ -1,0 +1,31 @@
+.image-container {
+    position: relative;
+  }
+  
+  .image {
+    width: 100%;
+    height: auto;
+  }
+  
+  .first{
+    top: 15%; 
+    left: 70%; 
+  }
+
+  .second{
+    top: 40%; 
+    left: 60%; 
+  }
+
+  .image-button {
+    
+    position: absolute;
+    transform: translate(-50%, -50%);
+    opacity: 0.9;
+    transition: opacity 0.9s ease;
+  }
+  
+  .image-button:hover {
+    opacity: 1;
+  }
+  
