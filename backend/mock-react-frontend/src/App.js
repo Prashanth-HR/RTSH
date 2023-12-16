@@ -22,6 +22,10 @@ const App = () => {
         const data = {
             start: startDateTime.toISOString(),
             end: endDateTime.toISOString(),
+            email: "yoo@yoomail.com",
+            description: "This is a dsecriptionnn"
+
+
         };
 
         fetch('http://127.0.0.1:5000/reserve', {
