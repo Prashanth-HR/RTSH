@@ -108,8 +108,8 @@ def reserve_parking_lot_availability():
         (ParkingLotReservation.start_datetime < end) & (ParkingLotReservation.end_datetime > start)
     ).first()
     if conflict:
-        return jsonify({'available': False, 'message': 'Is already reserved'}), 400
-    return jsonify({'available': True, 'message': 'Can be reserved'})
+        return jsonify({'available': False, 'message': 'Parking lot is already reserved'}), 400
+    return jsonify({'available': True, 'message': 'Parking lot can be reserved'})
 
 @app.route('/reserve_parking_lot', methods=['POST'])
 def reserveParkingLot():
