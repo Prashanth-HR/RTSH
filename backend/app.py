@@ -93,7 +93,7 @@ def send_confirmation_email(reservation_id, email):
     except:
         print("Email didnt work, TODO") #TODO
 
-@app.route('/reserve_parking_lot_availability', methods=['GET'])
+@app.route('/reserve_parking_lot_availability', methods=['POST'])
 def reserve_parking_lot_availability():
     data = request.json 
     start_str = data['start_datetime'].rstrip('Z')  # Remove 'Z' if present #  'Z' (Zulu time, which is another way to denote UTC) 
@@ -132,7 +132,7 @@ def reserveParkingLot():
     db.session.commit()
     return jsonify({'message': 'Datetime is reserved'})
 
-@app.route('/reserve_availability', methods=['GET'])
+@app.route('/reserve_availability', methods=['POST'])
 def reserve_availability():
     data = request.json 
     start_str = data['start_datetime'].rstrip('Z')  # Remove 'Z' if present #  'Z' (Zulu time, which is another way to denote UTC) 

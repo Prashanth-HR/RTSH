@@ -1,107 +1,118 @@
 import React, { useState } from 'react';
 import { Col, Row, Button, Container, InputGroup, Form, Table } from 'react-bootstrap';
+import { createBooking, checkBookAvailability } from '../services/services';
 
-function BookingForm({ onAddBooking }) {
+
+const BookingForm = () => {
+  const [startDateTime, setStartDate] = useState('');
+  const [endDateTime, setEndDate] = useState('');
   const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const [email, setEmail] = useState('');
+  const [description, setDescription] = useState('');
+  const [reservationType, setReservationType] = useState({
+    normal: false,
+    parkingLot: false
+  });
+  const [availabilityChecked, setAvailabilityChecked] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (name.trim() === '' || endDate.trim() === '' || startDate.trim() === '' || phone.trim() === '') {
-      return;
+  const handleCheckAvailability = () => {
+    // Add logic to check availability based on the provided dates
+    // You can make an API request to the server to check availability
+    // Update the UI or show a message accordingly
+    const data = {
+      'start_datetime': startDateTime,
+      'end_datetime': endDateTime,
     }
+    checkBookAvailability(data).then((response) => {
+      console.log(response)
+      setAvailabilityChecked(response.data.available)
+    })
+    console.log('Checking availability...');
 
-    const newBooking = {
-      id: new Date().getTime(),
-      name,
-      endDate,
-      startDate,
-    };
+    // Assuming availability check is successful
+    //setAvailabilityChecked(true);
+  };
 
-    onAddBooking(newBooking);
+  const handleBook = () => {
+    // Add logic to handle the booking
+    // You can make an API request to the server to save the booking
+    // Update the UI or show a confirmation message
+    const formData = {
+      'start_datetime': startDateTime,
+      'end_datetime': endDateTime,
+      'name': name,
+      'email': email,
+      'description': description,
+    }
+    createBooking(formData).then(
+      console.log("Booking Done")
+    )
 
-    setName('');
-    setStartDate('');
-    setEndDate('');
+    console.log('Booking...');
   };
 
   return (
-    <div className="booking-form">
-      <h2>Add a Booking</h2>
-      <form onSubmit={handleSubmit}>
-        <Row>
-          <Col> 
-          
-          <InputGroup className="mb-3">
-      <InputGroup.Text id="start-date-addon">Start Date</InputGroup.Text>
-      <Form.Control
-        type="date"
-        placeholder="Select start date"
-        aria-label="Start date"
-        aria-describedby="start-date-addon"
-        value={startDate}
-        onChange={(e) => setStartDate(e.target.value)}
-      />
-    </InputGroup>
-        </Col>
-        
+    <div>
+      <h2>Booking Form</h2>
+      <Row>
+        <Col md={{ span: 4, offset: 4 }}>
+          <Form>
+            <Form.Group controlId="startDate">
+              <Form.Label>Start Date:</Form.Label>
+              <Form.Control
+                type="date"
+                value={startDateTime}
+                onChange={(e) => setStartDate(e.target.value)}
+              />
+            </Form.Group>
+            <br />
+            <Form.Group controlId="endDate">
+              <Form.Label>End Date:</Form.Label>
+              <Form.Control
+                type="date"
+                value={endDateTime}
+                onChange={(e) => setEndDate(e.target.value)}
+              />
+            </Form.Group>
+            <br />
+            <Button
+              variant="primary"
+              onClick={handleCheckAvailability}
+            >
+              Check Availability
+            </Button>
 
-        <Col> 
-        <InputGroup className="mb-3">
-      <InputGroup.Text id="end-date-addon">End Date</InputGroup.Text>
-      <Form.Control
-        type="date"
-        placeholder="Select end date"
-        aria-label="End date"
-        aria-describedby="end-date-addon"
-        value={endDate}
-        onChange={(e) => setEndDate(e.target.value)}
-      />
-    </InputGroup>
+            {availabilityChecked && (
+              <>
+                <Form.Group controlId="name">
+                  <Form.Label>Name:</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </Form.Group>
+                <br />
+                <Form.Group controlId="email">
+                  <Form.Label>Email:</Form.Label>
+                  <Form.Control
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </Form.Group>
+                <br />
+                <Button
+                  variant="success"
+                  onClick={handleBook}
+                >
+                  Book
+                </Button>
+              </>
+            )}
+          </Form>
         </Col>
-        
-        <Col> 
-      
-        <Button type="submit" variant="secondary" >Check the booking</Button>{' '}
-        </Col>
-        
-        </Row> 
-
-        <Row>
-          <Col>
-          <InputGroup className="mb-3">
-          <InputGroup.Text id="phone-addon">Name</InputGroup.Text>
-      <Form.Control
-        placeholder="John"
-        aria-label="Name"
-        aria-describedby="basic-addon1"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-    </InputGroup>
-          </Col> 
-
-        <Col>
-        <InputGroup className="mb-3">
-      <InputGroup.Text id="phone-addon">Phone</InputGroup.Text>
-      <Form.Control
-        placeholder="+49 123 456 78 89"
-        aria-label="Phone number"
-        aria-describedby="phone-addon"
-        value={phone}
-        onChange={(e) => setPhone(e.target.value)}
-      />
-    </InputGroup>
-        </Col>
-        <Col>
-        <Button type="submit" variant="secondary">    Book    </Button>{' '}
-       
-        </Col>
-        
-        </Row>
-      </form>
+      </Row>
     </div>
   );
 }
