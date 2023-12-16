@@ -36,7 +36,7 @@ def reserve():
     ).first()
 
     if conflict:
-        return jsonify({'message': 'Datetime is not available'}), 400
+        return jsonify({'message': 'Datetime is not available for reservation'}), 400
 
     # Create a new reservation
     new_reservation = Reservation(start_datetime=start, end_datetime=end)
