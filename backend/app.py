@@ -98,7 +98,7 @@ def reserve_parking_lot_availability():
     data = request.json 
     start_str = data['start_datetime'].rstrip('Z')  # Remove 'Z' if present #  'Z' (Zulu time, which is another way to denote UTC) 
     end_str = data['end_datetime'].rstrip('Z')  # Remove 'Z' if present
-    start_datetime= datetime.fromisoformat(start_str)
+    start= datetime.fromisoformat(start_str)
     end = datetime.fromisoformat(end_str)
     # Ensure the start_datetimeand end times are in 15-minute intervals
     if (start.minute % 15 != 0) or (end.minute % 15 != 0):
@@ -191,7 +191,7 @@ def parking_lot_reserved_dates():
     for reservation in reservations:
         start_date = reservation.start_datetime.isoformat()
         end_date = reservation.end_datetime.isoformat()
-        reserved_date_ranges.append({'start': start_date, 'end': end_date, 'description': reservation.description, 'email':reservation.email})
+        reserved_date_ranges.append({'start_datetime': start_date, 'end_datetime': end_date, 'description': reservation.description, 'email':reservation.email})
 
     return jsonify(reserved_date_ranges)
 
@@ -202,7 +202,7 @@ def reserved_dates():
     for reservation in reservations:
         start_date = reservation.start_datetime.isoformat()
         end_date = reservation.end_datetime.isoformat()
-        reserved_date_ranges.append({'start': start_date, 'end': end_date, 'description': reservation.description, 'email':reservation.email})
+        reserved_date_ranges.append({'start_datetime': start_date, 'end_datetime': end_date, 'description': reservation.description, 'email':reservation.email})
 
     return jsonify(reserved_date_ranges)
 
