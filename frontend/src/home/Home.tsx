@@ -56,8 +56,8 @@ const Body = () => {
                 <Route path='/'  />
                 <Route path='/simulation'  />
                 <Route path='/booking' element={<Bookings />} />
-                <Route path='/booking/create' element={<BookingForm />} />
-                <Route path='/booking/create-parking' element={<BookingForm type={'parkingLot'}/>} />
+                <Route path='/booking/create' element={<BookingForm type='normal'/>} />
+                <Route path='/booking/create-parking' element={<BookingForm type='parkingLot'/>} />
                 
                 <Route path='/booking/showbookings' element={<BookingsCalender />} />
             </Routes>

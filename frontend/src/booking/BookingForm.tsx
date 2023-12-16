@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router';
 
 
 
-const BookingForm = (type = 'normal') => {
+const BookingForm = (type) => {
   const navigate = useNavigate();
 
   const [startDateTime, setStartDate] = useState('');
