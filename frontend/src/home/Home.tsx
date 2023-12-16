@@ -3,6 +3,7 @@ import { Nav, Navbar, Container } from "react-bootstrap";
 import { Routes, Route } from "react-router-dom";
 import BookingForm from '../booking/BookingForm';
 import BookingList from '../booking/BookingList';
+import ImageMap from "../booking/Picture";
 
 
 const Home = () => {
@@ -71,6 +72,12 @@ const Body = () => {
                 <Route path='/booking' element={<BookingList bookings={bookings} onRemoveBooking={removeBooking} />} />
                 <Route path='/booking/create' element={<BookingForm onAddBooking={addBooking} />} />
             </Routes>
+        
+             
+
+
+
+
         </>
     )
 }

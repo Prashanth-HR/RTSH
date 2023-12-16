@@ -3,11 +3,11 @@ import { Col, Row, Button, Container, InputGroup, Form, Table } from 'react-boot
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
-
+import ImageMap from "./Picture.tsx";
 import { getBookings } from '../services/services'
 
 const BookingList = () => {
-
+  
   const [bookings, setBookings] = useState([])
 
   const fetchBookings = async () => {
@@ -29,6 +29,8 @@ const BookingList = () => {
             <Button href="/booking/create">Create Booking</Button>
           </Col>
         </Row>
+
+        <ImageMap></ImageMap>
         <FullCalendar
                 plugins={[dayGridPlugin, timeGridPlugin]}
                 initialView="timeGridWeek"
