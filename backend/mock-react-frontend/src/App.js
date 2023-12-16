@@ -75,19 +75,26 @@ const imageUrl = process.env.PUBLIC_URL + '/testbed.png'; // Adjust the path if 
                 .catch(error => console.error('Error:', error));
             }
         };
-
+        const formatReservationForCalendar = (reservation) => {
+            return {
+                title: `${reservation.description || 'Reserved'} - ${reservation.name} - ${reservation.email}`,
+                start: reservation.start,
+                end: reservation.end,
+                color: isParkingLotReservation(reservation) ? '#ff7f50' : '#007bff',
+                // Add more properties as needed
+                extendedProps: {
+                    email: reservation.email,
+                    name: reservation.name,
+                    description: reservation.description
+                }
+            };
+        };
         return (
             <div>
                 <FullCalendar
                     plugins={[dayGridPlugin, timeGridPlugin]}
                     initialView="timeGridWeek"
-                    events={allReservations.map(dateRange => ({
-                        title: dateRange.description || 'Reserved', // Show description if available
-                        start: dateRange.start,
-                        end: dateRange.end,
-                        color: isParkingLotReservation(dateRange) ? '#ff7f50' : '#007bff' // Coral for parking, Blue for normal
-
-                    }))}
+                    events={allReservations.map(formatReservationForCalendar)}
                 />
                 <div>
                     <h2>Reserve a Time Slot</h2>
