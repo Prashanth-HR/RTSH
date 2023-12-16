@@ -41,6 +41,7 @@ const NavBar = () => {
                     <Nav className="me-auto">
                         <Nav.Link href="/booking">Booking</Nav.Link>
                         <Nav.Link href="/simulation">Simulation</Nav.Link>
+                        <Nav.Link href="/donations">Donations</Nav.Link>
                     </Nav>
                 </Container>
             </Navbar>
@@ -48,6 +49,13 @@ const NavBar = () => {
     )
 }
 
+const Donations = () => {
+    return (
+        <div>
+            <p> This is a Donations tab. Your Donation helps support our mission. Thank you for your generosity!</p>
+        </div>
+    )
+}
 const Body = () => {
     
     return (
@@ -60,6 +68,8 @@ const Body = () => {
                 <Route path='/booking/create-parking' element={<BookingForm type='parkingLot'/>} />
                 
                 <Route path='/booking/showbookings' element={<BookingsCalender />} />
+                <Route path='/donations' element={<Donations/>} />
+
             </Routes>
 
         </>
