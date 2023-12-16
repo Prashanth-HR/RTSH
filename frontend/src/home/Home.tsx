@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Nav, Navbar, Container } from "react-bootstrap";
 import { Routes, Route } from "react-router-dom";
+import { BookingsCalender } from "src/booking/BookingsCalendar";
 import BookingForm from '../booking/BookingForm';
-import BookingList from '../booking/BookingList';
-import ImageMap from "../booking/Picture";
+import {Bookings} from '../booking/Bookings';
 
 
 const Home = () => {
@@ -49,37 +49,22 @@ const NavBar = () => {
 }
 
 const Body = () => {
-
-    const [bookings, setBookings] = useState([]);
-
-    // Function to add a new booking to the list
-    const addBooking = (newBooking) => {
-      setBookings([...bookings, newBooking]);
-    };
-  
-    // Function to remove a booking from the list
-    const removeBooking = (id) => {
-      const updatedBookings = bookings.filter((booking) => booking.id !== id);
-      setBookings(updatedBookings);
-    };
-
     
     return (
         <>
             <Routes>
                 <Route path='/'  />
                 <Route path='/simulation'  />
-                <Route path='/booking' element={<BookingList bookings={bookings} onRemoveBooking={removeBooking} />} />
-                <Route path='/booking/create' element={<BookingForm onAddBooking={addBooking} />} />
+                <Route path='/booking' element={<Bookings />} />
+                <Route path='/booking/create' element={<BookingForm />} />
+                <Route path='/booking/create-parking' element={<BookingForm type={'parkingLot'}/>} />
+                
+                <Route path='/booking/showbookings' element={<BookingsCalender />} />
             </Routes>
-        
-             
-
-
-
 
         </>
     )
 }
+
 
 export default Home

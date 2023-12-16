@@ -1,18 +1,21 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Col, Row, Button, Container, InputGroup, Form, Table } from 'react-bootstrap';
-import { createBooking, checkBookAvailability } from '../services/services';
+import { createBooking, checkBookAvailability, checkBookAvailabilityParking, createBookingParking } from '../services/services';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { useNavigate } from 'react-router';
 
 
-const BookingForm = () => {
+
+const BookingForm = (type = 'normal') => {
+  const navigate = useNavigate();
+
   const [startDateTime, setStartDate] = useState('');
   const [endDateTime, setEndDate] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [description, setDescription] = useState('');
-  const [reservationType, setReservationType] = useState({
-    normal: false,
-    parkingLot: false
-  });
+
   const [availabilityChecked, setAvailabilityChecked] = useState(false);
 
   const handleCheckAvailability = () => {
@@ -23,14 +26,26 @@ const BookingForm = () => {
       'start_datetime': startDateTime,
       'end_datetime': endDateTime,
     }
-    checkBookAvailability(data).then((response) => {
-      console.log(response)
-      setAvailabilityChecked(response.data.available)
-    })
-    console.log('Checking availability...');
+    if (type == 'normal') {
+      checkBookAvailability(data).then((response) => {
+        console.log(response)
+        let available = response.data.available
+        setAvailabilityChecked(available)
+        if (available != true) {
+          window.alert('The selected slot is not available')
+        }
+      })
+    } else {
+      checkBookAvailabilityParking(data).then((response) => {
+        console.log(response)
+        let available = response.data.available
+        setAvailabilityChecked(available)
+        if (available != true) {
+          window.alert('The selected slot is not available')
+        }
+      })
+    }
 
-    // Assuming availability check is successful
-    //setAvailabilityChecked(true);
   };
 
   const handleBook = () => {
@@ -44,11 +59,17 @@ const BookingForm = () => {
       'email': email,
       'description': description,
     }
-    createBooking(formData).then(
-      console.log("Booking Done")
-    )
-
-    console.log('Booking...');
+    if (type == "normal") {
+      createBooking(formData).then(() => {
+        console.log('Normal Booking Created');
+        navigate('/vehicles')
+      })
+    }else{
+      createBookingParking(formData).then(() => {
+        console.log('Parking Booking Created');
+        navigate('/vehicles')
+      })
+    }
   };
 
   return (
@@ -59,20 +80,37 @@ const BookingForm = () => {
           <Form>
             <Form.Group controlId="startDate">
               <Form.Label>Start Date:</Form.Label>
-              <Form.Control
+              <br />
+              <DatePicker
+                selected={startDateTime}
+                onChange={date => setStartDate(date)}
+                showTimeSelect
+                dateFormat="Pp"
+                timeIntervals={15}
+              />
+              {/* <Form.Control
                 type="date"
                 value={startDateTime}
                 onChange={(e) => setStartDate(e.target.value)}
-              />
+              /> */}
             </Form.Group>
             <br />
             <Form.Group controlId="endDate">
               <Form.Label>End Date:</Form.Label>
-              <Form.Control
+              <br />
+              <DatePicker
+                selected={endDateTime}
+                onChange={date => setEndDate(date)}
+                showTimeSelect
+                dateFormat="Pp"
+                minDate={startDateTime}
+                timeIntervals={15}
+              />
+              {/* <Form.Control
                 type="date"
                 value={endDateTime}
                 onChange={(e) => setEndDate(e.target.value)}
-              />
+              /> */}
             </Form.Group>
             <br />
             <Button
