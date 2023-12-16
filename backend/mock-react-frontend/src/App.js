@@ -45,8 +45,8 @@ const imageUrl = process.env.PUBLIC_URL + '/testbed.png'; // Adjust the path if 
         const handleReservation = () => {
             // Prepare the data to send
             const data = {
-                start: startDateTime.toISOString(),
-                end: endDateTime.toISOString(),
+                start_datetime: startDateTime.toISOString(),
+                end_datetime: endDateTime.toISOString(),
                 email: email,
                 description: description,
                 name: name,
@@ -78,8 +78,8 @@ const imageUrl = process.env.PUBLIC_URL + '/testbed.png'; // Adjust the path if 
         const formatReservationForCalendar = (reservation) => {
             return {
                 title: `${reservation.description || 'Reserved'} - ${reservation.name} - ${reservation.email}`,
-                start: reservation.start,
-                end: reservation.end,
+                start_datetime: reservation.start_datetime,
+                end_datetime: reservation.end_datetime,
                 color: isParkingLotReservation(reservation) ? '#ff7f50' : '#007bff',
                 // Add more properties as needed
                 extendedProps: {
