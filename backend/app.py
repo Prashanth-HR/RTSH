@@ -1,11 +1,10 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-app = Flask(__name__)
 from threading import Thread, Lock
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import UserMixin
-from datetime import datetime
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 
@@ -19,7 +18,6 @@ db = SQLAlchemy()
 db.init_app(app) 
 
 reservationLock = Lock()
-
 
 
 
@@ -42,7 +40,7 @@ def reserve():
     # Check if the datetime range is available
     with reservationLock:
         conflict = Reservation.query.filter(
-            (Reservation.start_datetime < end) & (Reservation.end_datetime > start)
+            (Reservation.start_datetime <= end) & (Reservation.end_datetime >= start)
         ).first()
 
         if conflict:
@@ -54,8 +52,19 @@ def reserve():
         db.session.commit()
         return jsonify({'message': 'Datetime is reserved'})
 
+@app.route('/reserved-dates', methods=['GET'])
+def reserved_dates():
+    # Fetch all reservations from the database
+    reservations = Reservation.query.all()
+    # Prepare a list to store the reserved date ranges
+    reserved_date_ranges = []
+    # Iterate through the reservations and format the dates
+    for reservation in reservations:
+        start_date = reservation.start_datetime.strftime('%Y-%m-%d')
+        end_date = reservation.end_datetime.strftime('%Y-%m-%d')
+        reserved_date_ranges.append({'start': start_date, 'end': end_date})
 
-
-
+    # Return the list of reserved date ranges
+    return jsonify(reserved_date_ranges)
 if __name__ == '__main__':
     app.run(debug=True)
