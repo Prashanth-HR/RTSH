@@ -191,7 +191,7 @@ def parking_lot_reserved_dates():
     for reservation in reservations:
         start_date = reservation.start_datetime.isoformat()
         end_date = reservation.end_datetime.isoformat()
-        reserved_date_ranges.append({'start_datetime': start_date, 'end_datetime': end_date, 'description': reservation.description, 'email':reservation.email})
+        reserved_date_ranges.append({'start_datetime': start_date, 'end_datetime': end_date, 'description': reservation.description, 'email':reservation.email, 'name':reservation.name})
 
     return jsonify(reserved_date_ranges)
 
@@ -202,7 +202,7 @@ def reserved_dates():
     for reservation in reservations:
         start_date = reservation.start_datetime.isoformat()
         end_date = reservation.end_datetime.isoformat()
-        reserved_date_ranges.append({'start_datetime': start_date, 'end_datetime': end_date, 'description': reservation.description, 'email':reservation.email})
+        reserved_date_ranges.append({'start_datetime': start_date, 'end_datetime': end_date, 'description': reservation.description, 'email':reservation.email, 'name':reservation.name})
 
     return jsonify(reserved_date_ranges)
 
