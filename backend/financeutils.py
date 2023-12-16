@@ -95,15 +95,16 @@ def get_normalized_trends(keyword, last_n_days=30, min_value=0.8, max_value=1.2)
 
     return normalized_trends
 
-def get_current_day_normalized_trend(keyword, last_n_days=30, min_value=0.8, max_value=1.2):
+def get_current_or_previous_day_normalized_trend(keyword, last_n_days=30, min_value=0.8, max_value=1.2):
     """
     Fetch Google Trends data for the last n days, normalize it, and return the value for the current day.
+    If the current day's data is not available, return the most recent available day's data.
 
     :param keyword: Keyword to search in Google Trends
     :param last_n_days: Number of days to look back
     :param min_value: Minimum value of the normalized range
     :param max_value: Maximum value of the normalized range
-    :return: Normalized value for the current day
+    :return: Normalized value for the current or most recent day
     """
     today = datetime.date.today()
     start_date = today - datetime.timedelta(days=last_n_days)
@@ -112,15 +113,22 @@ def get_current_day_normalized_trend(keyword, last_n_days=30, min_value=0.8, max
     pytrends.build_payload(kw_list=[keyword], timeframe=timeframe)
     interest_over_time_df = pytrends.interest_over_time()
 
+    if interest_over_time_df.empty:
+        return None
+
     # Normalize the values to the specified range
     min_trend = interest_over_time_df[keyword].min()
     max_trend = interest_over_time_df[keyword].max()
     normalized_trends = (interest_over_time_df[keyword] - min_trend) / (max_trend - min_trend)
     normalized_trends = normalized_trends * (max_value - min_value) + min_value
 
-    # Get the value for the current day
+    # Get the value for the current day, or the most recent day if current day's data is not available
     current_day_value = normalized_trends.get(today.strftime('%Y-%m-%d'))
-    return current_day_value
+    if current_day_value is not None:
+        return current_day_value
+    else:
+        # Return the most recent day's data
+        return normalized_trends.iloc[-1]
 
 
 def calculate_hourly_price(operational_cost_per_hour, google_trends_factor, profit_margin_percentage):
