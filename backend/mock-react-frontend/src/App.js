@@ -24,6 +24,7 @@ const imageUrl = process.env.PUBLIC_URL + '/testbed.png'; // Adjust the path if 
             fetch('http://127.0.0.1:5000/reserved-dates')
                 .then(response => response.json())
                 .then(data => {
+                    console.log('Fetched reserved dates:', data); // Log the fetched data
                     setReservedDates(data);
                 });
     
@@ -76,10 +77,11 @@ const imageUrl = process.env.PUBLIC_URL + '/testbed.png'; // Adjust the path if 
             }
         };
         const formatReservationForCalendar = (reservation) => {
+            console.log('Processing reservation:', reservation); // Log the current reservation
             return {
                 title: `${reservation.description || 'Reserved'} - ${reservation.name} - ${reservation.email}`,
-                start_datetime: reservation.start_datetime,
-                end_datetime: reservation.end_datetime,
+                start: reservation.start_datetime,
+                end: reservation.end_datetime,
                 color: isParkingLotReservation(reservation) ? '#ff7f50' : '#007bff',
                 // Add more properties as needed
                 extendedProps: {
