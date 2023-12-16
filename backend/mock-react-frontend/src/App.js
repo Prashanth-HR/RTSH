@@ -43,6 +43,20 @@ const imageUrl = process.env.PUBLIC_URL + '/testbed.png'; // Adjust the path if 
         const handleCheckboxChange = (e) => {
             setReservationType({...reservationType, [e.target.name]: e.target.checked });
         }
+        const checkReserveability=  () => {
+            const data = {
+                start_datetime: startDateTime.toISOString(),
+                end_datetime: endDateTime.toISOString(),
+            };
+            fetch('http://127.0.0.1:5000/reserve_availability', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+            })
+            .then(response => response.json())
+            .then(data => alert(data.message))
+            .catch(error => console.error('Error:', error));
+        }
         const handleReservation = () => {
             // Prepare the data to send
             const data = {
@@ -150,6 +164,8 @@ const imageUrl = process.env.PUBLIC_URL + '/testbed.png'; // Adjust the path if 
                         timeIntervals={15}  
                     />
                     <button onClick={handleReservation}>Reserve</button>
+                    <button onClick={checkReserveability}>Check reserveability</button>
+
                 </div>
                 <img src={imageUrl} alt="Example" />
             </div>
