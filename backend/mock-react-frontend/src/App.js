@@ -36,7 +36,9 @@ const imageUrl = process.env.PUBLIC_URL + '/testbed.png'; // Adjust the path if 
         }, []);
 
         const allReservations = [...reservedDates, ...parkingLotReservedDates];
-
+        const isParkingLotReservation = (reservation) => {
+            return parkingLotReservedDates.includes(reservation);
+        };
         const handleCheckboxChange = (e) => {
             setReservationType({...reservationType, [e.target.name]: e.target.checked });
         }
@@ -83,6 +85,8 @@ const imageUrl = process.env.PUBLIC_URL + '/testbed.png'; // Adjust the path if 
                         title: dateRange.description || 'Reserved', // Show description if available
                         start: dateRange.start,
                         end: dateRange.end,
+                        color: isParkingLotReservation(dateRange) ? '#ff7f50' : '#007bff' // Coral for parking, Blue for normal
+
                     }))}
                 />
                 <div>
