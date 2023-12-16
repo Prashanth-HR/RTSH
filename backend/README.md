@@ -1,7 +1,9 @@
 This flask application constitutes the backend of our product.
 
 
-* How to run the backend: 
+* How to run the backend:
+`cd backend` 
+`pip install -r requirements.txt`
 `python app.py`
 
 * How to run the streamlit mock frontend
