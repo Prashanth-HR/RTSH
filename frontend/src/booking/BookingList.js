@@ -21,7 +21,7 @@ const BookingList = () => {
         <h2>Bookings</h2>
         <Row>
           <Col md={{ span: 4, offset: 8 }}>
-            <Button href="/vehicles/create">New Vehicle</Button>
+            <Button href="/booking/create">Create Booking</Button>
           </Col>
         </Row>
         <ul>
