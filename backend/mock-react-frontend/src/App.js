@@ -9,7 +9,9 @@ const App = () => {
     const [reservedDates, setReservedDates] = useState([]);
     const [startDateTime, setStartDateTime] = useState(new Date());
     const [endDateTime, setEndDateTime] = useState(new Date());
-
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [description, setDescription] = useState('');
     useEffect(() => {
         fetch('http://127.0.0.1:5000/reserved-dates')
             .then(response => response.json())
@@ -22,9 +24,9 @@ const App = () => {
         const data = {
             start: startDateTime.toISOString(),
             end: endDateTime.toISOString(),
-            email: "yoo@yoomail.com",
-            description: "This is a dsecriptionnn"
-
+            email: email,
+            description: description,
+            name: name,
 
         };
 
@@ -58,6 +60,24 @@ const App = () => {
             />
             <div>
                 <h2>Reserve a Time Slot</h2>
+                <input 
+                    type="text"
+                    placeholder="Name"
+                    value={name}
+                    onChange={e => setName(e.target.value)}
+                />
+                <input 
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                />
+                <input 
+                    type="text"
+                    placeholder="Description"
+                    value={description}
+                    onChange={e => setDescription(e.target.value)}
+                />
                 <DatePicker 
                     selected={startDateTime}
                     onChange={date => setStartDateTime(date)}
