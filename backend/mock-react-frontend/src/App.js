@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 const App = () => {
     const [reservedDates, setReservedDates] = useState([]);
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
+    const [startDateTime, setStartDateTime] = useState(new Date());
+    const [endDateTime, setEndDateTime] = useState(new Date());
 
     useEffect(() => {
         fetch('http://127.0.0.1:5000/reserved-dates')
@@ -19,8 +20,8 @@ const App = () => {
 
     const handleReservation = () => {
         const data = {
-            start: startDate.toISOString(),
-            end: endDate.toISOString(),
+            start: startDateTime.toISOString(),
+            end: endDateTime.toISOString(),
         };
 
         fetch('http://127.0.0.1:5000/reserve', {
@@ -43,8 +44,8 @@ const App = () => {
     return (
         <div>
             <FullCalendar
-                plugins={[dayGridPlugin]}
-                initialView="dayGridMonth"
+                plugins={[dayGridPlugin, timeGridPlugin]}
+                initialView="timeGridWeek"
                 events={reservedDates.map(dateRange => ({
                     title: 'Reserved',
                     start: dateRange.start,
@@ -52,21 +53,21 @@ const App = () => {
                 }))}
             />
             <div>
-                <h2>Reserve a Date</h2>
+                <h2>Reserve a Time Slot</h2>
                 <DatePicker 
-                    selected={startDate}
-                    onChange={date => setStartDate(date)}
-                    selectsStart
-                    startDate={startDate}
-                    endDate={endDate}
+                    selected={startDateTime}
+                    onChange={date => setStartDateTime(date)}
+                    showTimeSelect
+                    dateFormat="Pp"
+                    timeIntervals={15}  
                 />
                 <DatePicker 
-                    selected={endDate}
-                    onChange={date => setEndDate(date)}
-                    selectsEnd
-                    startDate={startDate}
-                    endDate={endDate}
-                    minDate={startDate}
+                    selected={endDateTime}
+                    onChange={date => setEndDateTime(date)}
+                    showTimeSelect
+                    dateFormat="Pp"
+                    minDate={startDateTime}
+                    timeIntervals={15}  
                 />
                 <button onClick={handleReservation}>Reserve</button>
             </div>
