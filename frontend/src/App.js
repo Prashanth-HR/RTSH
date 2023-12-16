@@ -1,30 +1,19 @@
-import React, { useState } from 'react';
-import NavBar from './navbar/NavBar';
-import BookingForm from './booking/BookingForm';
-import BookingList from './booking/BookingList';
+import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Home from './home/Home.tsx';
+import { BrowserRouter } from "react-router-dom";
 
 function App() {
-  const [bookings, setBookings] = useState([]);
 
-  // Function to add a new booking to the list
-  const addBooking = (newBooking) => {
-    setBookings([...bookings, newBooking]);
-  };
-
-  // Function to remove a booking from the list
-  const removeBooking = (id) => {
-    const updatedBookings = bookings.filter((booking) => booking.id !== id);
-    setBookings(updatedBookings);
-  };
 
   return (
-    <div className="app">
-      <NavBar />
-      <div className="container">
-        <BookingForm onAddBooking={addBooking} />
-        <BookingList bookings={bookings} onRemoveBooking={removeBooking} />
+    <>
+      <div className="App">
+        <BrowserRouter>
+          <Home />
+        </BrowserRouter>
       </div>
-    </div>
+    </>
   );
 }
 
