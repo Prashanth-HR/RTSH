@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router';
 
 
 
-const BookingForm = (type) => {
+const BookingForm = (props) => {
   const navigate = useNavigate();
 
   const [startDateTime, setStartDate] = useState('');
@@ -26,7 +26,7 @@ const BookingForm = (type) => {
       'start_datetime': startDateTime,
       'end_datetime': endDateTime,
     }
-    if (type == 'normal') {
+    if (props.type == 'normal') {
       checkBookAvailability(data).then((response) => {
         console.log(response)
         let available = response.data.available
@@ -59,15 +59,15 @@ const BookingForm = (type) => {
       'email': email,
       'description': description,
     }
-    if (type == "normal") {
+    if (props.type == "normal") {
       createBooking(formData).then(() => {
         console.log('Normal Booking Created');
-        navigate('/vehicles')
+        navigate('/booking')
       })
     }else{
       createBookingParking(formData).then(() => {
         console.log('Parking Booking Created');
-        navigate('/vehicles')
+        navigate('/booking')
       })
     }
   };
