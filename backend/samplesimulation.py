@@ -100,9 +100,21 @@ directions = [
     ('left', 15),
     # ('leftup', 160),
     ('leftupish', 135),
+    ('up', 13),
+    ('left', 23),
+    ('down', 2),
+    ('left', 5),
+    ('up', 13),
+    ('left', 19),
+    ('up', 10)
+
+
+
 
     # Add more tuples as needed to follow the track
 ]
+
+directions *= 100
 
 def move_car_hardcoded(car_rect, directions):
     global car_path_index
@@ -138,7 +150,6 @@ def move_car_hardcoded(car_rect, directions):
         directions[car_path_index] = (direction, steps)
         if steps == 0:
             car_path_index += 1
-        
 
 # Main loop
 running = True
