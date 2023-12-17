@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Nav, Navbar, Container } from "react-bootstrap";
+import { Nav, Navbar, Container, Alert } from "react-bootstrap";
 import { Routes, Route } from "react-router-dom";
 import { BookingsCalender } from "src/booking/BookingsCalendar";
 import BookingForm from '../booking/BookingForm';
-import {Bookings} from '../booking/Bookings';
+import { Bookings } from '../booking/Bookings';
+import {MainPage} from './MainPage.js';
 
 
 const Home = () => {
@@ -51,24 +52,34 @@ const NavBar = () => {
 
 const Donations = () => {
     return (
-        <div>
-            <p> This is a Donations tab. Your Donation helps support our mission. Thank you for your generosity!</p>
-        </div>
+        <Alert variant="success">
+            <Alert.Heading>Hey, nice to see you</Alert.Heading>
+            <p>
+                Aww yeah, you successfully read this important alert message. This
+                example text is going to run a bit longer so that you can see how
+                spacing within an alert works with this kind of content.
+            </p>
+            <hr />
+            <p className="mb-0">
+                Whenever you need to, be sure to use margin utilities to keep things
+                nice and tidy.
+            </p>
+        </Alert>
     )
 }
 const Body = () => {
-    
+
     return (
         <>
             <Routes>
-                <Route path='/'  />
-                <Route path='/simulation'  />
+                <Route path='/' element={<MainPage/>}/>
+                <Route path='/simulation' />
                 <Route path='/booking' element={<Bookings />} />
-                <Route path='/booking/create' element={<BookingForm type='normal'/>} />
-                <Route path='/booking/create-parking' element={<BookingForm type='parkingLot'/>} />
-                
+                <Route path='/booking/create' element={<BookingForm type='normal' />} />
+                <Route path='/booking/create-parking' element={<BookingForm type='parkingLot' />} />
+
                 <Route path='/booking/showbookings' element={<BookingsCalender />} />
-                <Route path='/donations' element={<Donations/>} />
+                <Route path='/donations' element={<Donations />} />
 
             </Routes>
 

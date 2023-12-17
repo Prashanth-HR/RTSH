@@ -1,0 +1,70 @@
+:root{
+    --black: #010101
+}
+
+/* Reset some default styles */
+body, h1, p, button {
+    margin: 0;
+    padding: 0;
+    background-color: var(--white);
+}
+
+/* Style the background container */
+.background-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr;
+    height: 100vh;
+    background-color: var(--black);
+}
+
+
+/* Text container styles */
+.text-container {
+    grid-column: span 2;
+    text-align: left;
+    padding: 40px;
+    background: transparent;
+    position: absolute;
+    left: 5%;
+    bottom: 5%;
+    grid-row:1;
+
+}
+
+.text-container h1 {
+    font-family: "Public Sans", sans-serif;
+    font-weight: bold;
+    font-size: 40px;
+    color: var(--white);
+    margin-bottom: 20px;
+    background: transparent;
+}
+
+.text-container p {
+    font-size: 20px;
+    color: var(--white);
+    font-family: "TT Interphases", sans-serif;
+    margin-bottom: 30px;
+    background: transparent;
+}
+
+.text-container button {
+    padding: 10px 20px;
+    background-color: var(--cta-color);
+    color: var(--white);
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Background image styles */
+.background-image {
+    grid-column: 2 / span 3;
+    grid-row: 1;
+    background-image: url('./pictures used/background image home.jpg');
+    background-size: cover;
+    background-position: center;
+}
