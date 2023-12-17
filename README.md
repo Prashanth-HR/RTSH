@@ -5,9 +5,7 @@
 
 
 # Video of working prototype
-<video width="320" height="240" controls>
-  <source src="https://youtu.be/w5GVZNmyliQ" type="video/mp4">
-</video>
+[![Demo Video](https://img.youtube.com/vi/w5GVZNmyliQ/0.jpg)](https://www.youtube.com/watch?v=w5GVZNmyliQ)
 
 
 # Inspiration
