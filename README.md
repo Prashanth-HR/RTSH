@@ -1,7 +1,8 @@
-# RTSH
+# Stuwerk Tracks
 
-## Team **StuWerk Tracks** results from a 24hr long *Road To Start Hack*  Hackathon.
+Provide a booking portal for the autonomous driving testbeds and also simulations, so that they can catch the bugs early
 
+## From Team *StuWerk Tracks* after a 24hr long *Road To Start Hack*.
 
 
 # Video of working prototype
@@ -52,3 +53,7 @@ $ cd backend
 $ pip3 install -r requirements.txt
 $ python3 app.py 
 ```
+
+
+## Links: 
+**DevPost Project**: https://devpost.com/software/stuwerk-tracks?ref_content=my-projects-tab&ref_feature=my_projects
