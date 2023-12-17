@@ -61,7 +61,7 @@ const BookDemo = (props) => {
             <div className="content-column-demo">
                 <h1 className="tagline-demo">Your Space, Your Pace</h1>
                 <p className="content-demo">Reserve, Innovate, Succeed: Book your breakthrough today</p>
-                <button onClick={() => {props.navigate('/booking/create')}}>RESERVE NOW</button>
+                <button onClick={() => {props.navigate('/booking')}}>RESERVE NOW</button>
 
             </div>
         </div>

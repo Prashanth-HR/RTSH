@@ -55,7 +55,7 @@ const GetCertified = () => {
             <Alert variant="success">
               <Alert.Heading>Hey, nice to see you</Alert.Heading>
               <div>
-                U can get your route planning software certified by us.
+                U can get your route planning software certified by us. Please contact "info@stuwerk-tracks.mail" .
               </div>
             </Alert>
           );

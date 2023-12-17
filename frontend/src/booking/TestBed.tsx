@@ -7,9 +7,9 @@ const TestBed = () => {
     <div className="image-container">
       <img src="./IMG_3324.JPG" alt="Your Image" className="image" />
       
-      <Button href="/booking/create-parking" type="submit" variant="warning" className="first image-button">Book me!</Button>
+      <Button href="/booking/create-parking" type="submit" variant="warning" className="first image-button">Book Parking</Button>
 
-      <Button href="/booking/create" type="submit" variant="primary" className="second image-button">Book me!</Button>
+      <Button href="/booking/create" type="submit" variant="primary" className="second image-button">Book Track</Button>
     </div>
   );
 };
