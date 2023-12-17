@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import { BookingsCalender } from "src/booking/BookingsCalendar";
 import BookingForm from '../booking/BookingForm';
 import { Bookings } from '../booking/Bookings';
-import {MainPage} from './react components/MainPage.js';
+import {MainPage} from './MainPage.js';
 
 
 const Home = () => {
