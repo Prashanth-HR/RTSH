@@ -1,0 +1,88 @@
+/* Reset some default styles */
+:root{
+    --cta-color: #ff6f00;
+    --white: #f5f5f5;
+}
+
+body, h1, p, button {
+    padding: 0;
+}
+
+body {
+    font-family: 'Public Sans', sans-serif;
+    height: 100vh;
+}
+
+.page-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 20px;
+    gap: 20px;
+    height: 100vh;
+}
+
+/* Style for the column with the picture */
+.picture-column {
+    display: flex; /* Use flexbox to align items vertically */
+    flex-direction: column; /* Align items in a column */
+    justify-content: center; /* Center items vertically within the column */
+    align-items: center;
+    grid-column: 2;
+    height: 100vh;
+}
+
+img {
+    margin: 20px;
+    width: 574px;
+    height: 540px;
+}
+
+/* Style for the column with title, paragraph, and button */
+.content-column {
+    display: flex; /* Use flexbox to align items vertically */
+    flex-direction: column; /* Align items in a column */
+    align-items: flex-start; /* Align items to the start (left) of the column */
+    justify-content: center; /* Center items vertically within the column */
+    grid-column: 1;
+    padding: 25%;
+    height: 100vh;
+    background-color: var(--white); /* Set a background color for contrast */
+}
+
+h1, p, button {
+    color: #010101;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: bold;
+    font-size: 40px;
+    text-align:left;
+    height: 118px;
+    width: 300px;
+    margin-bottom: 10px;
+}
+
+/* Paragraph style */
+p {
+    font-family: 'TT Interphases', sans-serif;
+    text-align: left;
+}
+
+/* Button style */
+button {
+    font-weight: bold;
+    padding: 10px 20px;
+    border: 4px solid var(--cta-color); /* Red outline */
+    border-radius: 10px; /* 10px rounding */
+    background-color: transparent;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Button hover effect */
+button:hover {
+    background-color: var(--cta-color);
+    color: var(--white);
+}
